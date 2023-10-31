@@ -45,7 +45,8 @@ read_mod <- function(dir, modfile) {
 #' Fit defined NONMMEM model according to the current pharmpy functions.
 #'
 #' @param model pharmpy model object
-#' @param dir
+#' @param dir Character string providing the output directory (folder) where
+#' the modelfit content will be saved.
 #'
 #' @return Returns the results from pharmpr::fit()
 #' @export
@@ -59,18 +60,8 @@ read_mod <- function(dir, modfile) {
 run_nonmem <- function(model, dir) {
   tryCatch(
     expr = {
-      # define original working directory
-      original_wd <- getwd()
-
-      # set working directory to output dir (workaround, replace later)
-      setwd(dir)
-
       # fit the model
-      res <- pharmr::fit(model)
-
-      # set wd back to original
-      setwd(original_wd)
-
+      res <- pharmr::run_modelfit(model, path=dir)
       # return
       return(res)
     },
